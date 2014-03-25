@@ -1,0 +1,25 @@
+%import clapi
+%include tpl/01.html r=r
+%include tpl/0m.html r=r
+
+%for n,c in r.echolist:
+%ei = clapi.get_echoarea(n)
+
+      <hr /><div class="row">
+<div class="one fourth padded">
+<h3><a href="/{{n}}">{{n}}</a> <small><i class="icon-envelope-alt"></i> {{c}}</small></h3>
+</div>
+
+%for x in ei[:-4:-1]:
+%mo = clapi.get_msg(x)
+<div class="one fourth padded">
+    <div class="box" data-truncate="4">
+        {{mo.msg[:200]}}
+    </div>
+</div>
+%end
+      </div>
+
+%end
+
+%include tpl/02.html r=r

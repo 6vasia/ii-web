@@ -1,0 +1,35 @@
+%import clapi as api, clapi.sx as sx
+%include tpl/01.html r=r
+%include tpl/0m.html r=r
+
+    <br />
+
+%zubj = ''
+
+%for n in reversed(j):
+%mo = api.get_msg(n)
+%if not zubj and not mo.repto: zubj = 'Re: ' + mo.subj
+<a name="{{n}}"></a>
+      <article class="row">
+
+
+<div class="box padded {{'info' if mo.repto else 'question large'}}">
+  <a title="Ответить на это сообщение" href="/reply/{{ea}}/{{n}}"><i class="icon-mail-reply blue"></i></a> 
+    <strong>
+%if mo.repto:
+<a href="#{{mo.repto}}" class="noicon">{{mo.subj}}</a>
+%else:
+{{mo.subj}}
+%end
+    </strong> 
+      <nobr><span class="icon-time"></span> {{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC </nobr>
+<div class="pull-right">    <strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to <strong>{{mo.msgto}}</strong> </div>
+    <hr />
+        {{! sx.rend(mo.msg) }}
+    </div>
+<br />
+    </article>
+<hr />
+%end
+
+%include tpl/02.html r=r

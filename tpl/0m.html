@@ -1,0 +1,24 @@
+        <div>
+            <a class="button" href="/"><i class="icon-home red"></i>  {{r.ea}}</a>
+%if r.ea:
+            <a class="button" href="/reply/{{r.ea}}/-" title="Написать новое сообщение"><i class="icon-file blue"></i></a>
+%end
+
+        <div class="pull-right">
+
+            <a class="button" href="/h/get" title="Загрузить новые сообщения"><i class="icon-cloud-download purple"></i></a>
+            <a class="button" href="/h/send" title="Отправить сообщения"><i class="icon-cloud-upload asphalt"></i></a>
+            <a class="button" href="/h/out" title="Написанные сообщения"><i class="icon-inbox"></i></a>
+
+              <div class="dropdown">
+                <button><i class="icon-book"></i> список конференций</button>
+                <ul>
+%for n,c in r.echolist:
+                    <li><a href="/{{n}}">{{n}} ({{c}})</a></li>
+%end
+                </ul>
+              </div>
+
+
+        </div>
+        </div>

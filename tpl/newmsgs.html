@@ -1,0 +1,18 @@
+%import clapi as api, clapi.sx as sx
+%include tpl/01.html r=r
+
+<h3><a href="/">новые сообщения</a></h3>
+
+%for n,m in msgbuf:
+%x = m.splitlines()
+
+  <article class="row">
+    <div class="box padded purple">
+    <strong><a href="/{{x[1]}}">{{x[1]}}</a></strong><br /><br />
+        {{! sx.rend('\n'.join( x[8:] )) }}
+    </div>
+  </article>
+<hr />
+%end
+
+%include tpl/02.html r=r
