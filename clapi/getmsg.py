@@ -18,7 +18,7 @@ def filter_urls(my,out,url):
     for n in out:
         if not n in my:
             out = getf('%sm/%s' % (url, n))
-            if out and not '<' in out:
+            if out:
                 open('msg/%s' % n,'w').write(out)
                 nmy.append(n)
                 nmbuf.append ( (n,out) )
