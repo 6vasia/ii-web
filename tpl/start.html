@@ -6,7 +6,9 @@
 
 %zubj = ''
 
-%for n in reversed(j):
+%ij = j if r.getl.rev else reversed(j)
+
+%for n in ij:
 %mo = api.get_msg(n)
 %if not zubj and not mo.repto: zubj = 'Re: ' + mo.subj
 <a name="{{n}}"></a>

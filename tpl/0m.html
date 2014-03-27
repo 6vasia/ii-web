@@ -1,6 +1,13 @@
         <div>
             <a class="button" href="/"><i class="icon-home red"></i>  {{r.ea}}</a>
 %if r.ea:
+%if r.getl.rev:
+<a class="button" href="/{{r.ea}}" title="Показать сообщения в обычном стиле"><i class="icon-sort-by-order red"></i></a>
+%else:
+<a class="button" href="/{{r.ea}}?rev=1" title="Показать сообщения в обратном порядке"><i class="icon-sort-by-order-alt green"></i></a>
+%end
+
+            <a class="button" href="{{r.url}}{{r.ea}}" title="Эта эха на ноде"><i class="icon-link"></i></a>
             <a class="button" href="/reply/{{r.ea}}/-" title="Написать новое сообщение"><i class="icon-file blue"></i></a>
 %end
 

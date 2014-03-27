@@ -25,7 +25,7 @@ def index_list(echo,year):
     allstart()
     ea = '%s.%s' % (echo,year)
     if not flt.echo_flt(ea): return ea
-    local.r.update(page_title = u'%s : ii-client' % ea,ea=ea)
+    local.r.update(page_title = u'%s : ii-client' % ea,ea=ea,url=url)
     return template('tpl/start.html',r=local.r,j=api.get_echoarea(ea),ea=ea)
 
 @route('/reply/<ea>/<repto>')
@@ -49,7 +49,7 @@ def h_get():
 def h_send():
     allstart()
     om.pushall(url,phash)
-    return '<a href="/h/out">ok</a>'
+    return '<a href="/h/out"><h1>go back</h1></a>'
 
 
 @route('/h/out')

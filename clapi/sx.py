@@ -28,4 +28,7 @@ def gts():
 def rend(txt):
     out = bottle.html_escape(txt)
     r1 = re.compile(r"(\b(http|https)://([-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]))")
-    return r1.sub(r'<a href="\1">\1</a>',out).replace('\n', '<br />')
+    out = r1.sub(r'<a href="\1">\1</a>',out)
+    r2 = re.compile(r"(\b(ii)://([-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]))")
+    out = r2.sub(r'<strong><a href="\3">\3</a></strong>',out)
+    return out.replace('\n', '<br />')
