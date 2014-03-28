@@ -64,7 +64,7 @@ def qmsg_post(ea):
     rq = request.forms
     if not flt.echo_flt(ea): return ea
     if not request.forms.msg or not request.forms.subj: return ''
-    om.om(ea,rq.subj,'All',rq.msg,rq.repto)
+    om.om(ea,rq.subj,rq.msgto,rq.msg,rq.repto)
     redirect ('/h/out')
 
 @route('/s/<filename:path>')
