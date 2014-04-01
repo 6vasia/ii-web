@@ -2,8 +2,11 @@
 
 import zlib, base64, os, urllib
 
-def getf(l):
-    return urllib.urlopen(l).read()
+def postf(url,pauth,s):
+    data = urllib.urlencode({'tmsg': s,'pauth': pauth})
+    u = urllib.urlopen(url + 'z/point', data)
+    return u.read()
+
 
 def ff(lst,e):
     return set([int(x[:-len(e)]) for x in lst if x.endswith(e)])
@@ -22,8 +25,10 @@ def mktoss(f,tx):
 
 def zpush(f,url,auth):
     txt = open('out/%s.toss' % f).read()
-    out = getf('%sz/push/%s/%s' % (url, auth, txt))
-    os.remove('out/%s.toss' % f)
+    out = postf(url,auth,txt)
+    if out.startswith('msg ok'):
+        os.remove('out/%s.toss' % f)
+
 
 def getout(f):
     return open('out/%s.out' % f).read()
@@ -48,10 +53,3 @@ def pushall(url,authstr):
     t,o,top = lsout()
     for x in t:
         zpush(x,url,authstr)
-
-#om('ii.2014','suubj!','All',u'Привет всем всем всем всееееееем!')
-#om('ii.2014',u'suubjик!','All',u'Привет всем всем всем всееееееем!\nВсем всем!')
-
-#zpush(1,'http://51t.ru/','_')
-
-#print outmsgs()

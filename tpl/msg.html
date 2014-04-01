@@ -1,4 +1,5 @@
-%import clapi as api, clapi.sx as sx
+%import clapi.sx as sx, clapi as api
+
 %include tpl/01.tpl r=r
 
     <div class="row">
@@ -14,30 +15,33 @@
     </div></div>
     <hr />
 
-    <div class="row">
-        <div class="small-12 columns">
+    <div class="row"><div class="small-12 columns">
 
-%for n,m in reversed(outbuf):
-%x = m.splitlines()
-    <div class="panel radius {{'' if n else 'callout'}}">
-            {{!u'<span class="tiny success radius label" title="Отправлено"><i class="fa fa-envelope"></i></span>' if n else ''}}
-    <a href="/{{x[0]}}"><span class="tiny radius label">{{x[0]}}</span></a>
-    <a href="/{{x[0]}}"><span class="tiny alert radius label">{{x[2]}}</span></a>
+{{! '<h2>%s</h2>' % mytitle if mytitle else '' }}
 
-%if len(x)>4 and x[4].startswith('@repto:'):
-%_,q = x[4].split(':',1)
-        <a href="/{{q}}"><span class="tiny secondary radius label">Ответ на {{q}}</span></a>
-<br /><br />        {{! sx.rend('\n'.join( x[5:] )) }}
-%else:
-<br /><br />        {{! sx.rend('\n'.join( x[4:] )) }}
-%end
-    </div>
-<hr />
-%end
+%for mo in lst:
 
+<a name="{{mo.msgid}}"></a>
+<div class="row">
+    <div class="small-12 columns">
+        <div class="radius panel">
+            <p>
+            <a class="tiny radius button" href="/{{mo.echoarea}}#{{mo.msgid}}">{{mo.echoarea}}</a>
+            <strong>{{mo.subj}}</strong>
+            <span class="fa fa-clock-o"></span> {{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC</span>
+            <span class="pull-right"><strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}}</p>
 
+            <p>{{! sx.rend(mo.msg) }}</p>
         </div>
+
     </div>
+</div> <!-- row -->
+<hr />
+
+%end
+
+    </div></div>
+
 
     <script src="/s/js/vendor/jquery.js"></script>
     <script src="/s/js/foundation.min.js"></script>
