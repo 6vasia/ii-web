@@ -1,0 +1,13 @@
+repto/cJzFIlsjVeMW3oEpG4Ei
+ii.dev.2014
+1396291678
+ksa242
+lenina,45
+Vargos
+Re: Адреса msgfrom/msgto
+
+Как бы это не стало обязательной процедурой.  А Maildir-подобное размещение файла не рассматривали?  Типа такого:
+
+/ii.dev.2014/1396264425.1dg3TzCgmf0hAdOAeC2n
+
+…а список мессаг в эхе брать через readdir()/glob().

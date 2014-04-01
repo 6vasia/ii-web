@@ -1,0 +1,15 @@
+repto/ExGw6zDVzi7dsmRO9Bzg
+ii.dev.2014
+1396321683
+51t
+lenina,1
+51t
+Re: фильтры
+
+или даже так
+
+====
+    if code == 1: txt += '</code>'
+    if pre == 1: txt += '</pre>'
+    return txt
+====

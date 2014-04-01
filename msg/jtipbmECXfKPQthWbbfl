@@ -1,0 +1,31 @@
+repto/BAFlqF2hNIKsHzxqQz69
+ii.about.2014
+1396273900
+vit01
+lenina,50
+51t
+Re: тестирую новый txt-клиент
+
+> нужно сделать это адекватнее
+Ну вот даже не знаю, как это сделать адекватнее :)
+
+> плюс >, >>, >>> и т.д. должны стилем выделяться
+import re
+
+teststr="""
+>>cfdfisdfi
+
+dfd
+>>dfsdfsdfdtt
+
+"""
+teststr=teststr.split("\n")
+
+rr=re.compile("^>>")
+
+for i in range(0,len(teststr)):
+    if(re.match(rr,teststr[i])):
+        teststr[i]="<font color='green'>"+"&gt;$gt;"+teststr[i][2:]+"</font>"
+print ''.join(i+"\n" for i in teststr)
+
+Оно?
