@@ -1,0 +1,26 @@
+repto/jDeAOnlmgHbB0BwWRsqw
+ii.about.2014
+1396400047
+vit01
+lenina,50
+51t
+Re: регулярка
+
+PKGBUILD для арча готов
+
+pkgname=('ii')
+pkgver=('02')
+pkgdesc=("russian fido-like messaging system")
+pkgrel=1
+arch=('any')
+depends=('python2')
+license=('custom')
+url="http://51t.ru"
+source="http://51t.ru/s/$pkgname-$pkgver.tar.gz"
+md5sums="76957a6dc8f927599bf36cbe48d4d5d0"
+
+package() {
+        cd "${srcdir}/${pkgname}-${pkgver}"
+        mkdir -p $pkgdir/usr/lib/python2.7/site-packages/$pkgname
+        cp -r * $pkgdir/usr/lib/python2.7/site-packages/$pkgname
+}
