@@ -19,37 +19,16 @@ def get_echoarea(name):
     return _rf('echo/%s' % name).splitlines()
 
 def mk_jt(mh,mb):
-    return mh + ':' + base64.urlsafe_b64encode( zlib.compress(mb) )
+    return mh + ':' + base64.b64encode( mb.replace('-','+').replace('_','/') )
 
-def qua(ea,s):
-    items =  get_echoarea(ea)
-    if len(s) < 6 and s.isdigit():
-        return items[-int(s):]
-    else:
-        if not s in items: return items
-        return items[items.index(s)+1:]
-
-def parse_echos(echos):
-    pool = []
-    for ea in echos:
-        if ':' in ea:
-            items = qua(*ea.split(':',1))
-        else:
-            items = get_echoarea(ea)
-        for x in items:
-            if not x in pool:
-                pool.append(x)
-    return pool
-
-
-@route('/z/m/<h:path>')
+@route('/u/m/<h:path>')
 def jt_outmsg(h):
-    response.set_header ('content-type','text/plain; charset=utf-8')
+    response.set_header ('content-type','text/plain; charset=iso-8859-1')
     return _2nl( [mk_jt(x,raw_msg(x)) for x in h.split('/') if len(x)==20] )
 
-@route('/z/e/<names:path>')
+@route('/u/e/<names:path>')
 def index_list(names):
-    response.set_header ('content-type','text/plain; charset=utf-8')
+    response.set_header ('content-type','text/plain; charset=iso-8859-1')
     out = ''
     for ea in names.split('/'):
         out += ea + '\n'
@@ -57,10 +36,6 @@ def index_list(names):
         if ge: out += '\n'.join(ge) + '\n'
     return out
 
-@route('/z/get/<echos:path>')
-def jt_echo(echos):
-    response.set_header ('content-type','text/plain; charset=utf-8')
-    return _2nl( [mk_jt(x,raw_msg(x)) for x in parse_echos(echos.split('/'))] )
 
 @route('/m/<msg:re:[A-Za-z0-9]{20}>')
 def get_msg(msg):
