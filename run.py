@@ -11,8 +11,12 @@ def load_echo():
     echolist = [(x,api.echoarea_count(x)) for x in cfg[2:]]
 load_echo()
 
+def newmsg_tags():
+    try: return set(open('clapi/.newmsg').read().splitlines())
+    except: return set()
+
 def allstart():
-    local.r = sx.mydict(fz=sx.mydict(request.forms),getl=sx.mydict(request.GET),echolist=echolist)
+    local.r = sx.mydict(fz=sx.mydict(request.forms),getl=sx.mydict(request.GET),echolist=echolist,newmsgs=newmsg_tags())
 
 def _msg(o,ml,mytitle=''):
     allstart()
@@ -63,18 +67,12 @@ def h_get():
     newmsgs = open('clapi/.newmsg').read().splitlines()
     return _msg('lst', newmsgs,u'Новые сообщения')
 
-@route('/h/send')
-def h_send():
+@route('/h/<act:re:send|out>')
+def h_out(act):
     allstart()
-    om.pushall(url,phash)
-    return '<a href="/h/out"><h1>go back</h1></a>'
-
-@route('/h/out')
-def h_out():
-    allstart()
+    if act=='send': om.pushall(url,phash)
     local.r.page_title=u'Исходящие сообщения'
     return template('tpl/outmsgs.html',outbuf = om.outmsgs(),r=local.r)
-
 
 @post('/a/msg/<ea>')
 def qmsg_post(ea):

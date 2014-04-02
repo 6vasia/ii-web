@@ -33,6 +33,9 @@
         <div class="radius panel {{'' if mo.repto else 'callout'}}">
             <p><strong>{{mo.subj}}</strong>
             <i class="fa fa-clock-o"></i> {{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC
+%if n[-1] in r.newmsgs:
+            <span class="alert radius label">новое!</span>
+%end
             <span class="pull-right">
             <strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}} <a href="/{{n[-1]}}" title="Ссылка на это сообщение"><i class="fa fa-eye"></i></a></p>
             <p>{{! sx.rend(mo.msg) }}</p>

@@ -44,8 +44,13 @@
             <strong>{{mo.subj}}</strong>
 %end
             <i class="fa fa-clock-o" title="{{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC"></i>
+%if n in r.newmsgs:
+            <span class="alert radius label">новое!</span>
+%end
+
             <span class="pull-right">
             <strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}} <a href="/{{n}}" title="Ссылка на это сообщение"><i class="fa fa-eye"></i></a></p>
+
 
 %if mo.subj.startswith('bindata::'):
         <a class="alert button" href="/data/{{n}}">{{mo.subj}}</a>

@@ -1,5 +1,6 @@
 %import clapi.sx as sx, clapi as api
 
+%lastcolor = ''; lastecho = ''
 %include tpl/01.tpl r=r
 
     <div class="row">
@@ -21,12 +22,17 @@
 
 %for mo in lst:
 
+%if lastecho != mo.echoarea:
+%lastcolor = '' if lastcolor else 'success'
+%lastecho = mo.echoarea
+%end
+
 <a name="{{mo.msgid}}"></a>
 <div class="row">
     <div class="small-12 columns">
         <div class="radius panel">
             <p>
-            <a class="tiny radius button" href="/{{mo.echoarea}}#{{mo.msgid}}">{{mo.echoarea}}</a>
+            <a class="tiny radius {{lastcolor}} button" href="/{{mo.echoarea}}#{{mo.msgid}}">{{mo.echoarea}}</a>
             <strong>{{mo.subj}}</strong>
             <span class="fa fa-clock-o"></span> {{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC</span>
             <span class="pull-right"><strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}}</p>
