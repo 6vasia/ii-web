@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import zlib, base64, os, urllib
+import zlib, base64, os, urllib, clapi
 
 def postf(url,pauth,s):
     data = urllib.urlencode({'tmsg': s,'pauth': pauth})
-    u = urllib.urlopen(url + 'z/point', data)
+    u = urllib.urlopen(url + 'point', data)
     return u.read()
 
 
@@ -18,9 +18,9 @@ def lsout():
     top = max(outl) + 1 if outl else 1
     return tossl,outl,top
 
-def mktoss(f,tx):
+def mktoss(f,tx,us):
     open('out/%s.out' % f,'w').write(tx)
-    ctx = base64.urlsafe_b64encode( zlib.compress(tx,9) )
+    ctx = clapi.b64c(tx,us)
     open('out/%s.toss' % f,'w').write(ctx)
 
 def zpush(f,url,auth):
@@ -37,10 +37,10 @@ def mkmsg(ea,subj,msgto,msg,repto):
     rp = '@repto:%s\n' % repto if repto else ''
     return ea + '\n' + msgto + '\n' + subj + '\n\n' + rp + msg.replace('\r\n','\n')
 
-def om(ea,subj,msgto,msg,repto=''):
+def om(ea,subj,msgto,msg,repto='',us=True):
     tx = mkmsg(ea,subj,msgto,msg,repto).encode('utf-8')
     t,o,top = lsout()
-    mktoss(top,tx)
+    mktoss(top,tx,us)
 
 def outmsgs():
     out = []

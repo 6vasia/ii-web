@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import urllib2, base64, zlib
+import urllib2, base64, zlib, clapi
 
 cfg = open('config.cfg').read().splitlines()
+MODE = False if cfg[1].endswith('/z/') else True
 
 def getf(l):
     print 'fetch %s' % l
@@ -26,7 +27,7 @@ def sep(l,step=20):
         yield l[x:x+step]
 
 def unp(s):
-    return zlib.decompress(base64.urlsafe_b64decode(s)) 
+    return clapi.b64d(s,MODE)
 
 def debundle(ea,s):
     for n in s.splitlines():
@@ -46,11 +47,11 @@ def walk_el(out):
     return el
 
 def fetch(el,url):
-    out = getf('%sz/e/%s' % (url, '/'.join(el)))
+    out = getf('%se/%s' % (url, '/'.join(el)))
     el = walk_el(out)
     for ea in cfg[2:]:
         myel = set(get_echoarea(ea))
         dllist = [x for x in el[ea] if x not in myel]
         for dl in sep(dllist,40):
-            s = getf('%sz/m/%s' % (cfg[1], '/'.join(dl)))
+            s = getf('%sm/%s' % (cfg[1], '/'.join(dl)))
             debundle(ea,s)

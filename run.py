@@ -82,7 +82,8 @@ def qmsg_post(ea):
     rq = request.forms
     if not flt.echo_flt(ea): return ea
     if not request.forms.msg or not request.forms.subj: return ''
-    om.om(ea,rq.subj,rq.msgto,rq.msg,rq.repto)
+    us = False if url.endswith('/z/') else True
+    om.om(ea,rq.subj,rq.msgto,rq.msg,rq.repto,us)
     redirect ('/h/out')
 
 

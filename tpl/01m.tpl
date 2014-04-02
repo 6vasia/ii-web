@@ -41,7 +41,7 @@
             <!-- Left Nav Section --> 
         <ul class="left"> 
             <li class="divider"></li>
-            <li><a href="{{r.url}}{{r.ea}}" title="Эта эха на ноде"><i class="fa fa-fw fa-link"></i></a></li>
+            <li><a href="{{r.url[:-2] if r.url.endswith('/z/') or r.url.endswith('/u/') else r.url}}{{r.ea}}" title="Эта эха на ноде"><i class="fa fa-fw fa-link"></i></a></li>
             <li class="divider"></li>
             <li><a href="/reply/{{r.ea}}/-" title="Написать новое сообщение в эту эху">
                 <i class="fa fa-plus-circle"></i> NEW</a>
