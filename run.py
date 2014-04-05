@@ -88,6 +88,10 @@ def qmsg_post(ea):
     om.om(ea,rq.subj,rq.msgto,rq.msg,rq.repto,us)
     redirect ('/h/out')
 
+@route('/h/set')
+def h_set():
+    return 'У вас нет строки доступа. Вы не можете отправлять сообщения. О деталях подключения к 51t.ru смотрите на <a href="http://51t.ru">51t.ru</a>. Для других сетей - смотрите их официальные сайты.'
+
 @route('/s/<filename:path>')
 def new_style(filename):
     return static_file(filename,root='%s/s' % II_PATH)
