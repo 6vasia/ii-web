@@ -4,6 +4,9 @@ import clapi as api, clapi.sx as sx, clapi.flt as flt, clapi.getmsg as gm, clapi
 from clapi.bottle import *
 echolist = []; url = ''; phash = '*'
 
+II_PATH=os.path.dirname(__file__) or '.'
+TEMPLATE_PATH.insert(0,II_PATH)
+
 def load_echo():
     global echolist, url, phash
     cfg = open('config.cfg').read().splitlines()
@@ -12,11 +15,11 @@ def load_echo():
 load_echo()
 
 def newmsg_tags():
-    try: return set(open('clapi/.newmsg').read().splitlines())
+    try: return set(open('.newmsg').read().splitlines())
     except: return set()
 
 def allstart():
-    local.r = sx.mydict(fz=sx.mydict(request.forms),getl=sx.mydict(request.GET),echolist=echolist,newmsgs=newmsg_tags())
+    local.r = sx.mydict(fz=sx.mydict(request.forms),getl=sx.mydict(request.GET),echolist=echolist,newmsgs=newmsg_tags(),phash=phash)
 
 def _msg(o,ml,mytitle=''):
     allstart()
@@ -24,14 +27,10 @@ def _msg(o,ml,mytitle=''):
         mo = api.get_msg(ml) + {'msgid':ml}
         local.r.page_title =  mo.subj + ' @ ' + mo.echoarea
         lst = [mo]
-    elif o == 'lst':
+    elif o == 'lst' or o == 'lstall':
         lst=[api.get_msg(n) + {'msgid':n} for n in ml]
         local.r.page_title = mytitle or u'Список сообщений'
-    elif o == 'qr':
-        mo = api.toss('qr-msg',NODE+'1',ml)
-        local.r.page_title =  mo.subj
-        lst = [mo]
-    return template('tpl/msg.html',lst=[mo] if o != 'lst' else lst,r=local.r,mytitle=mytitle)
+    return template('tpl/msg.html',lst=[mo] if o not in ('lst','lstall') else lst,r=local.r,mytitle=mytitle,lim=o)
 
 @route('/')
 def start_page():
@@ -61,16 +60,21 @@ def index_list(echo,year):
 @route('/h/get')
 def h_get():
     allstart()
-    open('clapi/.newmsg','w').write('')
-    gm.fetch([x for x,y in echolist],url)
-    load_echo(); local.r.echolist = echolist
-    newmsgs = open('clapi/.newmsg').read().splitlines()
-    return _msg('lst', newmsgs,u'Новые сообщения')
+    if request.query.a:
+        newmsgs = open('.newmsg').read().splitlines()
+        mpage = 'lstall'
+    else:
+        open('.newmsg','w').write('')
+        gm.fetch([x for x,y in echolist],url)
+        load_echo(); local.r.echolist = echolist
+        newmsgs = open('.newmsg').read().splitlines()
+        mpage = 'lst'
+    return _msg(mpage, newmsgs[-100:],u'Новые сообщения [%s]' % len(newmsgs))
 
 @route('/h/<act:re:send|out>')
 def h_out(act):
     allstart()
-    if act=='send': om.pushall(url,phash)
+    if act=='send': local.r.debugmsg = om.pushall(url,phash)
     local.r.page_title=u'Исходящие сообщения'
     return template('tpl/outmsgs.html',outbuf = om.outmsgs(),r=local.r)
 
@@ -84,28 +88,13 @@ def qmsg_post(ea):
     om.om(ea,rq.subj,rq.msgto,rq.msg,rq.repto,us)
     redirect ('/h/out')
 
-
 @route('/s/<filename:path>')
 def new_style(filename):
-    return static_file(filename,root='./s')
-
-
-@route('/data/<msgid>')
-def data_render(msgid):
-    mo = api.get_msg(msgid)
-    if mo.subj.startswith('bindata::'):
-        response.set_header ('content-type', mo.subj[9:].strip())
-        return base64.b64decode( mo.msg.replace('-','+').replace('_','/') )
-    else:
-        return 'no data'
+    return static_file(filename,root='%s/s' % II_PATH)
 
 @route('/q/<msglst:path>')
 def msg_qpage(msglst):
     return _msg('lst',msglst.split('/'))
-
-@route('/qr/<tmsg>')
-def msg_qrpage(tmsg):
-    return _msg('qr',tmsg)
 
 @route('/<msghash:re:[^/]{20}>')
 def msg_page(msghash):

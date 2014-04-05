@@ -10,7 +10,11 @@
     <div class="small-5 columns">
         <span class="right">
             <a class="tiny success button" href="/h/get" title="Загрузить новые сообщения"><i class="fa fa-fw fa-cloud-download"></i></a>
+%if r.phash == ':no:':
+            <a class="tiny secondary button" href="/h/set" title="Необходимо задать authstr для отправки сообщения"><i class="fa fa-fw fa-minus-square"></i></a>
+%else:
             <a class="tiny alert button" href="/h/send" title="Отправить сообщения"><i class="fa fa-fw fa-cloud-upload"></i></a>
+%end
             <a class="tiny button" href="/h/out" title="Написанные сообщения"><i class="fa fa-fw fa-inbox"></i></a>
             <a href="#" class="tiny secondary button" data-dropdown="drop"><i class="fa fa-fw fa-book"></i></a> 
         <ul id="drop" class="f-dropdown" data-dropdown-content> 

@@ -20,15 +20,16 @@ def lsout():
 
 def mktoss(f,tx,us):
     open('out/%s.out' % f,'w').write(tx)
-    ctx = clapi.b64c(tx,us)
+    ctx = clapi.b64c(tx)
     open('out/%s.toss' % f,'w').write(ctx)
 
-def zpush(f,url,auth):
+def zpush(f,url,pauth):
     txt = open('out/%s.toss' % f).read()
-    out = postf(url,auth,txt)
+    out = postf(url,pauth,txt)
     if out.startswith('msg ok'):
         os.remove('out/%s.toss' % f)
-
+    else:
+        return out
 
 def getout(f):
     return open('out/%s.out' % f).read()
@@ -49,7 +50,8 @@ def outmsgs():
         out.append( (0 if x in tossl else 1,getout(x).decode('utf-8')) )
     return out
 
-def pushall(url,authstr):
+def pushall(url,pauth):
     t,o,top = lsout()
     for x in t:
-        zpush(x,url,authstr)
+        debugmsg = zpush(x,url,pauth)
+        if debugmsg: return debugmsg

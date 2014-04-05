@@ -10,7 +10,11 @@
     <div class="small-5 columns">
         <span class="right">
             <a class="tiny success button" href="/h/get" title="Загрузить новые сообщения"><i class="fa fa-fw fa-cloud-download"></i></a>
+%if r.phash == ':no:':
+            <a class="tiny secondary button" href="/h/set" title="Необходимо задать authstr для отправки сообщения"><i class="fa fa-fw fa-minus-square"></i></a>
+%else:
             <a class="tiny alert button" href="/h/send" title="Отправить сообщения"><i class="fa fa-fw fa-cloud-upload"></i></a>
+%end
             <a class="tiny button" href="/h/out" title="Написанные сообщения"><i class="fa fa-fw fa-inbox"></i></a>
         </span>
     </div></div>
@@ -32,12 +36,13 @@
     <div class="small-12 columns">
         <div class="radius panel">
             <p>
-            <a class="tiny radius {{lastcolor}} button" href="/{{mo.echoarea}}#{{mo.msgid}}">{{mo.echoarea}}</a>
+            <a class="tiny radius {{lastcolor}} label" href="/{{mo.echoarea}}#{{mo.msgid}}">{{mo.echoarea}}</a>
             <strong>{{mo.subj}}</strong>
             <span class="fa fa-clock-o"></span> {{sx.dateg(mo.date,'%d/%m %H:%M')}} UTC</span>
             <span class="pull-right"><strong title="{{mo.addr}}">{{mo.msgfrom}}</strong> to {{mo.msgto}}</p>
 
             <p>{{! sx.rend(mo.msg) }}</p>
+            <div class="right"><a href="/reply/{{mo.echoarea}}/{{mo.msgid}}"><i class="fa fa-reply"></i></a></div>
         </div>
 
     </div>
@@ -45,6 +50,11 @@
 <hr />
 
 %end
+
+%if get('lim','') == 'lst' and len(lst) == 100:
+<a class="secondary button" href="/h/get?a=a">show all</a>
+%end
+
 
     </div></div>
 

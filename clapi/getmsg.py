@@ -3,7 +3,6 @@
 import urllib2, base64, zlib, clapi
 
 cfg = open('config.cfg').read().splitlines()
-MODE = False if cfg[1].endswith('/z/') else True
 
 def getf(l):
     print 'fetch %s' % l
@@ -27,14 +26,14 @@ def sep(l,step=20):
         yield l[x:x+step]
 
 def unp(s):
-    return clapi.b64d(s,MODE)
+    return clapi.b64d(s)
 
 def debundle(ea,s):
     for n in s.splitlines():
         mid,kod = n.split(':',1)
         open('msg/%s' % mid,'w').write(unp(kod))
         open('echo/%s' % ea, 'a').write(mid + '\n')
-        open('clapi/.newmsg','a').write(mid + '\n') # for newmsg
+        open('.newmsg','a').write(mid + '\n') # for newmsg
 
 def walk_el(out):
     ea = ''; el = {}

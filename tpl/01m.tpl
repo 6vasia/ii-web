@@ -20,7 +20,11 @@
             <li class="divider"></li>
             <li><a href="/h/get" title="Загрузить новые сообщения"><i class="fa fa-fw fa-cloud-download"></i></a></li>
             <li class="divider"></li>
+%if r.phash == ':no:':
+            <li><a href="/h/set" title="Необходимо задать authstr для отправки сообщения"><i class="fa fa-fw fa-minus-square"></i></a></li>
+%else:
             <li><a href="/h/send" title="Отправить сообщения"><i class="fa fa-fw fa-cloud-upload"></i></a></li>
+%end
             <li class="divider"></li>
             <li><a href="/h/out" title="Написанные сообщения"><i class="fa fa-fw fa-inbox"></i></a></li>
             <li class="divider"></li>

@@ -8,7 +8,11 @@
     <div class="small-5 columns">
         <span class="right">
             <a class="tiny success button" href="/h/get" title="Загрузить новые сообщения"><i class="fa fa-fw fa-cloud-download"></i></a>
+%if r.phash == ':no:':
+            <a class="tiny secondary button" href="/h/set" title="Необходимо задать authstr для отправки сообщения"><i class="fa fa-fw fa-minus-square"></i></a>
+%else:
             <a class="tiny alert button" href="/h/send" title="Отправить сообщения"><i class="fa fa-fw fa-cloud-upload"></i></a>
+%end
             <a class="tiny button" href="/h/out" title="Написанные сообщения"><i class="fa fa-fw fa-inbox"></i></a>
         </span>
     </div></div>
@@ -17,7 +21,15 @@
     <div class="row">
         <div class="small-12 columns">
 
-%for n,m in reversed(outbuf):
+%if r.debugmsg:
+<div data-alert class="alert-box warning round">
+  {{r.debugmsg}}
+  <a href="#" class="close">&times;</a>
+</div>
+%end
+
+
+%for n,m in reversed(outbuf[-100:]):
 %x = m.splitlines()
     <div class="panel radius {{'' if n else 'callout'}}">
             {{!u'<span class="tiny success radius label" title="Отправлено"><i class="fa fa-envelope"></i></span>' if n else ''}}
