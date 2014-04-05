@@ -1,0 +1,13 @@
+ii/ok/repto/qZjZ4zbWCJxr3UAf5uGA
+im.1404
+1396446583
+51t
+lenina,1
+vit01
+Re: эх, давно не брал я в руки пыха
+
+а почему в site-packages? там же модули ставятся.
+
+нужно разделять на /usr/share/ii-net и /usr/share/doc/ii-net
+
+я потом тарбол с полной иерархией и со скриптами - соберу

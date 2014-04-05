@@ -1,0 +1,17 @@
+ii/ok/repto/e5NKz37n43bjeSBJzD29
+im.1404
+1396536781
+vit01
+lenina,50
+51t
+Re: эх, давно не брал я в руки пыха
+
+Я таки сумел собрать этот несчастный пакет (ох и трудно писать spec файлы)! Но вот проблема, во время запуска этого клиента пишет
+Traceback (most recent call last):
+  File "run.py", line 67, in <module>
+    run(host='127.0.0.1',port=62220,debug=False)
+  File "/usr/lib/python2.7/site-packages/ii/api/bottle.py", line 2824, in run
+    server.run(app)
+  File "/usr/lib/python2.7/site-packages/ii/api/bottle.py", line 2500, in run
+    from wsgiref.simple_server import make_server, WSGIRequestHandler
+ImportError: No module named wsgiref.simple_server

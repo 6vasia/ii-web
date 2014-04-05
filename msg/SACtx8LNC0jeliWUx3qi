@@ -1,0 +1,20 @@
+ii/ok/repto/djjJZA5KvKRqzjaqZiGF
+im.1404
+1396607521
+vit01
+lenina,50
+51t
+Re: php-нода
+
+0
+====
+function b64c($s,$us) {
+    if($us) return base64_encode($s);
+    else return rtrim(strtr(base64_encode(zlib_encode($s)), '+/', '-_'), '=');
+}
+function b64d($s,$us) {
+    $cnt = base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+    if($us) return $cnt;
+    else return zlib_decode($cnt);
+}
+====
