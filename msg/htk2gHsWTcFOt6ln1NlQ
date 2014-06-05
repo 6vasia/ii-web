@@ -1,9 +1,0 @@
-repto/p9sS2vZegj5E5IrgwUzM
-ii.dev.2014
-1396229804
-51t
-lenina,1
-vit01
-Re: тестирование
-
-при веб-доступе к чему? к эхе, к главной странице? включи debug=True вместо debug=False и кидай трейсами
