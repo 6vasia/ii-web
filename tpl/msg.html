@@ -24,6 +24,8 @@
 
 {{! '<h2>%s</h2>' % mytitle if mytitle else '' }}
 
+%if lim == 'lst': lst = lst[:100]
+
 %for mo in lst:
 
 %if lastecho != mo.echoarea:

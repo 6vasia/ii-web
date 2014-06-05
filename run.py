@@ -69,7 +69,7 @@ def h_get():
         load_echo(); local.r.echolist = echolist
         newmsgs = open('.newmsg').read().splitlines()
         mpage = 'lst'
-        newmsgs = newmsgs[-100:]
+        #newmsgs = newmsgs[-100:]
     return _msg(mpage, newmsgs,u'[%s] Новые сообщения' % len(newmsgs))
 
 @route('/h/<act:re:send|out>')
